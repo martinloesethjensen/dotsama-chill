@@ -10,3 +10,5 @@ build
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+.seed
