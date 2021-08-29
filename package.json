@@ -52,15 +52,6 @@
     "semistandard": "^16.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.8"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "semistandard"
-    ],
-    "plugins": [
-      "only-warn"
-    ]
-  },
   "engines": {
     "node": ">=12",
     "npm": ">=6"
