@@ -19,7 +19,7 @@ const options = require('yargs')
 
 async function main() {
 	// ['wss://rpc.polkadot.io'] and [''wss://kusama-rpc.polkadot.io'']
-	const endpoint = (typeof options.endpoint !== 'undefined') ? options.endpoint : 'wss://westend-rpc.polkadot.io';
+	const endpoint = options.endpoint !== 'undefined' ? options.endpoint : 'wss://westend-rpc.polkadot.io';
 	const provider = new WsProvider(endpoint);
 	
 	const api = await ApiPromise.create({ provider });
