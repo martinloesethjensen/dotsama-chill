@@ -1,9 +1,10 @@
 import {NominatorTable} from "./components/NominatorTable";
 
 export const ChillApp = ({}) => {
-    return <div>
+    return <div className="p-24">
+        <h1 className="text-4xl">Hello chill app </h1>
+
         <div className="flex justify-center">
-            <p className="text-lg">Hello chill app </p>
         </div>
         <NominatorTable/>
     </div>
