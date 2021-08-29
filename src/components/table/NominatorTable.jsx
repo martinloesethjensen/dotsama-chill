@@ -1,9 +1,10 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import {NominatorTile} from "./NominatorTile";
-import {fetchNominators} from "../utils/fetchNominators";
-import {SUPPORTED_NETWORKS} from "../utils/setProvider";
-import {LoadingState} from "./LoadingState";
+import {fetchNominators} from "../../utils/fetchNominators";
+import {SUPPORTED_NETWORKS} from "../../utils/setProvider";
+import {LoadingState} from "../LoadingState";
+import {TableHeader} from "./TableHeader";
 
 export const NominatorTable = () => {
 
@@ -21,7 +22,9 @@ export const NominatorTable = () => {
     }
 
 
-    return isLoading ? <LoadingState/> : <div>
-        {nominators.map((nominator, key) => <NominatorTile {...nominator} idx={key} key={key}/>)}
-    </div>
+    return isLoading ? <LoadingState/> :
+        <div>
+            <TableHeader/>
+            {nominators.map((nominator, key) => <NominatorTile {...nominator} idx={key} key={key}/>)}
+        </div>
 }
