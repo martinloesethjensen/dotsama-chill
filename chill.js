@@ -21,7 +21,6 @@ async function main() {
 	// ['wss://rpc.polkadot.io'] and [''wss://kusama-rpc.polkadot.io'']
 	const endpoint = (typeof options.endpoint !== 'undefined') ? options.endpoint : 'wss://rpc.polkadot.io';
 	const provider = new WsProvider(endpoint);
-	
 	const api = await ApiPromise.create({ provider });
 	
 	console.log(`Connected to node: ${(await api.rpc.system.chain()).toHuman()} [ss58: ${api.registry.chainSS58}]`);

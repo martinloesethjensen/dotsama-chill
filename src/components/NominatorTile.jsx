@@ -1,8 +1,9 @@
 import React from "react";
 
-export const NominatorTile = ({address, amount, isSelected,idx}) => {
+export const NominatorTile = ({address, amount, isSelected, idx}) => {
 
-    console.log(idx)
+    console.log(address)
+    console.log(amount)
     const getBackgroundColor = () => idx % 2 === 0 ? "bg-gray-100" : "bg-white";
 
     const _trimAddress = () => `${address.substring(0, 5)}...${address.substring(address.length - 6, address.length - 1)}`
