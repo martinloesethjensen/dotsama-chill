@@ -106,11 +106,11 @@ The [TxButton](./src/substrate-lib/components/TxButton.js) handles basic
 [query](https://polkadot.js.org/api/start/api.query.html) and
 [transaction](https://polkadot.js.org/api/start/api.tx.html) requests to the
 connected node. You can reuse this component for a wide variety of queries and
-transactions. See [src/Transfer.js](./src/Transfer.js) for a transaction example
+transactions. See [src/Transfer.js](src/substrate/Transfer.js) for a transaction example
 and [src/ChainState.js](./src/ChainState.js) for a query example.
 
 ### Account Selector
 
-The [Account Selector](./src/AccountSelector.js) provides the user with a unified way to
+The [Account Selector](src/substrate/AccountSelector.js) provides the user with a unified way to
 select their account from a keyring. If the Balances module is installed in the runtime,
 it also displays the user's token balance. It is included in the template already.

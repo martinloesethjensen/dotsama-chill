@@ -19,7 +19,7 @@ const options = require('yargs')
 
 async function main() {
 	// ['wss://rpc.polkadot.io'] and [''wss://kusama-rpc.polkadot.io'']
-	const endpoint = (typeof options.endpoint !== 'undefined') ? options.endpoint : 'wss://westend-rpc.polkadot.io';
+	const endpoint = (typeof options.endpoint !== 'undefined') ? options.endpoint : 'wss://rpc.polkadot.io';
 	const provider = new WsProvider(endpoint);
 	
 	const api = await ApiPromise.create({ provider });
@@ -47,7 +47,7 @@ async function main() {
 	const threshold = (chillThreshold / 100) * maxNominatorsCount;
 	
 	// extract the first key argument [AccountId] as string
-	const nominatorIds = nominatorKeys.map(({ args: [nominatorId] }) => nominatorId).slice(0,2);
+	const nominatorIds = nominatorKeys.map(({ args: [nominatorId] }) => nominatorId)
 
 	// User should not be allowed to chillOther as this is not possible if it is below threshold.
 	// TODO: should be used after testing
