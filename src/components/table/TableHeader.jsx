@@ -1,13 +1,16 @@
 import {NominatorsContext} from "../../context/NominatorsContext";
 import {SelectedNominatorsContext} from "../../context/SelectedNominatorsContext";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Button} from "../Button";
 import {chillNominators} from "../../utils/chillNominators";
+import Switch from "react-switch";
+import {SortButton} from "./SortButton";
 
 export const TableHeader = () => {
 
-    const {nominators} = useContext(NominatorsContext);
+    const {nominators, setNominators} = useContext(NominatorsContext);
     const {selectedNominators} = useContext(SelectedNominatorsContext);
+
 
     const handleOnClick = () => {
         //Todo chill the nominators
@@ -18,13 +21,18 @@ export const TableHeader = () => {
     const getButtonName = () => `Chill ${selectedNominators.length}`
 
 
-    return <div className="pt-2  px-4 bg-white mb-1 text-lg">
 
-        <div className="flex justify-between">
-            <p className="text-2xl pb-8">Nominators ({nominators.length})</p>
-            <Button onClick={handleOnClick} name={getButtonName()}/>
+
+    return <div className="text-lg">
+
+        <div className="flex justify-between mb-2  p-4  bg-white items-center">
+            <p className="text-2xl ">Nominators ({nominators.length})</p>
+            <div className="flex justify-between items-center w-4/12 ">
+                <SortButton/>
+                <Button onClick={handleOnClick} name={getButtonName()}/>
+            </div>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center font-bold px-4 py-2 bg-white ">
             <p className="w-1/12 text-left">Wanna Chill ? </p>
             <p className="w-8/12">Address</p>
             <p className="w-3/12 text-right  ">Amount</p>

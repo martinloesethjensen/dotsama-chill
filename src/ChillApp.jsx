@@ -9,7 +9,6 @@ import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
 export const ChillApp = ({}) => {
 
     const [nominators, setNominators] = useState([]);
-
     const [selectedNominators, setSelectedNominators] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +24,7 @@ export const ChillApp = ({}) => {
     }
 
 
-    return <NominatorsContext.Provider value={{nominators, onNominatorsFetched}}>
+    return <NominatorsContext.Provider value={{nominators, setNominators}}>
         <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
             <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
                 <h1 className="text-4xl pb-12">Hello chill app </h1>
