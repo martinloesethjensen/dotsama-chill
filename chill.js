@@ -72,25 +72,30 @@ async function main() {
 
 	//const controller = await api.query.staking.bonded(stash);
 
-	// const np = (await api.query.staking.nominators.entries()).map(async ([sk, _]) => {
+	// const nominatorPromises = (await api.query.staking.nominators.entries()).map(async ([sk, _]) => {
 	// 	const stash = api.createType('AccountId', sk.slice(-32));
 	// 	const c = (await api.query.staking.bonded(stash)).unwrapOrDefault();
 	// 	const stake = (await api.query.staking.ledger(stash)).unwrapOrDefault().total.toBn();
 	// 	return { stash, stake }
 	// });
-	// const n = await Promise.all(np);
+	// const n = await Promise.all(nominatorPromises);
+
+	// console.log(n.slice(0, 10).filter(( { stash, stake }) => stake.lt(800000)).length);
+	// return;
 	// console.log(`${n.filter(( { stash, stake }) => stake.lt(800000)).length} stashes are below ${api.createType('Balance', 800000)}`);
+	
+	// const stake = (await api.query.staking.ledger(nominatorIds[0])).unwrapOrDefault();
 
+	// console.log(stake);
+
+	// return;
+
+	//const stake = (await api.query.staking.ledger(controllers[0])).unwrapOrDefault();
 	await api.query.staking.bonded.multi(nominatorIds).then(async (_controllers) => {
+		const controllers = _controllers.map((controller) => controller.unwrapOrDefault());
 
-		const controllers = _controllers.map((controller) => controller.toHuman());
-
-		const stake = await api.query.staking.ledger(_controllers[0].toHuman());
-
-		console.log(stake);
-		return;
-
-		await api.query.staking.ledger.multi(controllers).then(async (stakes) => {
+		await api.query.staking.ledger.multi(controllers).then(async (_stakes) => {
+			const stakes = _stakes.map((stake) => stake.unwrapOrDefault());
 
 			let nominatorsBalancesBelow = new Map();
 			var index = 0;
