@@ -17,7 +17,6 @@ export const SortButton = ({}) => {
 
     const sortNominators = order => {
         setSortOrder(order);
-        console.log(order)
         setNominators(oldState => {
                 const newState = [...oldState];
                 order === SORT_ORDER.ASC ?

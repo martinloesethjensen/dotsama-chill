@@ -5,6 +5,8 @@ import {LoadingState} from "./components/LoadingState";
 import {fetchNominators} from "./utils/fetchNominators";
 import {SUPPORTED_NETWORKS} from "./utils/setProvider";
 import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
+import AccountSelector from "./substrate/AccountSelector";
+import {ConnectToWallet} from "./components/ConnectToWallet";
 
 export const ChillApp = ({}) => {
 
@@ -27,7 +29,10 @@ export const ChillApp = ({}) => {
     return <NominatorsContext.Provider value={{nominators, setNominators}}>
         <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
             <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                <h1 className="text-4xl pb-12">Hello chill app </h1>
+                <div className="flex justify-between">
+                    <h1 className="text-4xl pb-12">Hello chill app </h1>
+                    <ConnectToWallet/>
+                </div>
                 <div className="flex justify-center">
                 </div>
                 {isLoading ? <LoadingState/> : <NominatorTable/>}

@@ -3,8 +3,9 @@ import {SelectedNominatorsContext} from "../../context/SelectedNominatorsContext
 import React, {useContext, useState} from "react";
 import {Button} from "../Button";
 import {chillNominators} from "../../utils/chillNominators";
-import Switch from "react-switch";
 import {SortButton} from "./SortButton";
+import {RangeSlider} from "../slider/RangeSlider";
+import {TxButton} from "../../substrate-lib/components";
 
 export const TableHeader = () => {
 
@@ -19,8 +20,6 @@ export const TableHeader = () => {
     }
 
     const getButtonName = () => `Chill ${selectedNominators.length}`
-
-
 
 
     return <div className="text-lg">
