@@ -1,7 +1,6 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { Keyring } = require("@polkadot/keyring");
 const fs = require("fs");
-const BN = require("bn.js");
 
 const options = require("yargs")
   .option("endpoint", {
