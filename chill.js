@@ -87,7 +87,6 @@ async function main() {
   console.log("The maxNominatorsCount: " + maxNominatorsCount);
   console.log("The current date is: " + now);
   console.log("The current minNominatorBond is: " + minNominatorBond.toHuman());
-
   console.log("Total nominators:", nominatorIds.length);
 
   await api.query.staking.bonded
@@ -104,6 +103,8 @@ async function main() {
             .map((stake) => stake.unwrapOrDefault())
             .filter((item) => item.total.toBn() < minNominatorBond.toNumber())
             .map((item) => api.tx.staking.chillOther(item.stash));
+
+          console.log('Total chillable:', txns.length);
 
           const tx = api.tx.utility.batch(txns);
 
