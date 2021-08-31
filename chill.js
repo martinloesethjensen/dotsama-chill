@@ -99,16 +99,29 @@ async function main() {
       await api.query.staking.ledger
         .multi(controllers)
         .then(async (_stakes) => {
-          const txns = _stakes
+          const nominatorsBelow = _stakes
             .map((stake) => stake.unwrapOrDefault())
-            .filter((item) => item.total.toBn() < minNominatorBond.toNumber())
-            .map((item) => api.tx.staking.chillOther(item.stash));
+            .filter((item) => item.total.toBn() < minNominatorBond.toNumber());
 
-          console.log('Total chillable:', txns.length);
+          const txns = nominatorsBelow.map((item) =>
+            api.tx.staking.chillOther(item.stash)
+          );
+
+          // TODO(alex): make sure to slice the `nominatorsBelow` 
+		  // if they are higher than `chillableAmount`
+          /*
+		  if (nominatorsBelow.length > chillableAmount) {
+			// slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
+		  }
+		  */
+
+          console.log("Total chillable:", txns.length);
 
           const tx = api.tx.utility.batch(txns);
 
-          await tx.signAndSend(account, ({ status }) => {
+          // TODO(alex): Should sign with injector on the UI => `{ signer: injector.signer }`
+          // https://polkadot.js.org/docs/extension/usage
+          await tx.signAndSend(account, /*{ signer: injector.signer }, */ ({ status }) => {
             if (status.isInBlock) {
               console.log(
                 `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
