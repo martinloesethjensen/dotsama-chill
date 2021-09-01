@@ -1,6 +1,7 @@
 # dotsama-chill
 
-You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/). Please not that it can take a minute or two for it to load all the nominators that can be chilled.  
+You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/). 
+> Please not that it can take a minute or two for it to load all the nominators that can be chilled.  
 
 ## Introduction
 
