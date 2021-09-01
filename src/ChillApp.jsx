@@ -7,19 +7,31 @@ import {SUPPORTED_NETWORKS} from "./utils/setProvider";
 import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
 import AccountSelector from "./substrate/AccountSelector";
 import {ConnectToWallet} from "./components/ConnectToWallet";
+import {getApi} from "./utils/getApi";
+import {fetchStatistics} from "./utils/fetchStatistics";
 
 export const ChillApp = ({}) => {
 
     const [nominators, setNominators] = useState([]);
     const [selectedNominators, setSelectedNominators] = useState([]);
+    const [statistics, setStatistics] = useState([]);
+
     const [isLoading, setIsLoading] = useState(true);
 
     const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
-
     useEffect(() => {
-        fetchNominators(SUPPORTED_NETWORKS.POLKADOT, onNominatorsFetched);
+        setupChillApp();
     }, [])
+
+    const setupChillApp = async () => {
+        const api = await getApi(SUPPORTED_NETWORKS.POLKADOT);
+        const statistics = await fetchStatistics(api);
+
+
+        fetchNominators(api, statistics, onNominatorsFetched);
+        setStatistics(statistics);
+    }
 
 
     const onNominatorsFetched = nominatorsList => {
