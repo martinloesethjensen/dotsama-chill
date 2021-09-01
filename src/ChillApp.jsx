@@ -5,7 +5,6 @@ import {LoadingState} from "./components/LoadingState";
 import {fetchNominators} from "./utils/fetchNominators";
 import {SUPPORTED_NETWORKS} from "./utils/setProvider";
 import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
-import AccountSelector from "./substrate/AccountSelector";
 import {ConnectToWallet} from "./components/ConnectToWallet";
 import {getApi} from "./utils/getApi";
 import {fetchStatistics} from "./utils/fetchStatistics";

@@ -1,10 +1,6 @@
-import React, {useEffect} from "react";
-import {Button} from "./Button";
-import {web3Accounts, web3Enable, web3FromAddress} from "@polkadot/extension-dapp";
-
-
 /* This example requires Tailwind CSS v2.0+ */
-import {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useState} from "react";
+import {web3Accounts, web3Enable} from "@polkadot/extension-dapp";
 import {Listbox, Transition} from '@headlessui/react'
 import {CheckIcon, SelectorIcon} from '@heroicons/react/solid'
 import {getApi} from "../utils/getApi";
@@ -28,19 +24,23 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
         setAccounts(allAccounts);
         setSelectedAccount(allAccounts[0]);
 
+        fetchBalance(allAccounts[0]);
 
     }
 
 
+
     const handleOnAccountChange = async (newAccount) => {
         setSelectedAccount(newAccount);
+        fetchBalance(newAccount);
 
-        const api = await getApi()
+    }
 
-        const account = await api.query.system.account(newAccount.address);
-        const {data: {free: previousFree}} = account;
+    const fetchBalance = async (account) => {
+        const api = await getApi();
+
+        const {data: {free: previousFree}} = await api.query.system.account(account.address);
         setBalance(previousFree.toHuman());
-        console.log(previousFree.toHuman())
     }
 
     useEffect(() => {

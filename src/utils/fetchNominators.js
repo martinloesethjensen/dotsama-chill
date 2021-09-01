@@ -1,7 +1,4 @@
 //provider can be kusama or polkadot
-import {ApiPromise, WsProvider} from "@polkadot/api";
-import {getEndpointForNetwork} from "./setProvider";
-import {chillNominators} from "./chillNominators";
 
 
 export const fetchNominators = async (api, statistics, onSuccess) => {
@@ -22,7 +19,7 @@ export const fetchNominators = async (api, statistics, onSuccess) => {
                         .filter((item) => item.total.toBn() < minNominatorBond.toNumber())
                         .map(({stash, total}) => ({
                             address: stash.toHuman(),
-                            amount: total.toHuman()
+                            amount: total.toHuman(),
                         }));
 
                     onSuccess(nominatorsBelow)

@@ -8,9 +8,7 @@ export const chillNominators = async (statistics, account, nominatorsList) => {
     const {chillableAmount} = statistics;
 
     //createTransactionBatch
-    const transactions = nominatorsList.map(nominator =>
-        api.tx.staking.chillOther(nominator.stash)
-    );
+    const transactions = nominatorsList.map(nominator => api.tx.staking.chillOther(nominator));
 
 
     // if they are higher than `chillableAmount`
@@ -23,8 +21,14 @@ export const chillNominators = async (statistics, account, nominatorsList) => {
 
     console.log("Total chillable:", transactions.length);
 
-    console.log("ACCOUNT")
-    console.log(account)
+    console.log("Nominator")
+
+
+    console.log(nominatorsList)
+    console.log(transactions)
+
+
+    // return;
 
     const tx = api.tx.utility.batch(transactions);
     await tx.signAndSend(account.address, {signer: injector.signer}, ({status}) => {

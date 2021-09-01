@@ -1,5 +1,4 @@
-import React, {useContext, useEffect} from "react";
-import {NominatorsContext} from "../../context/NominatorsContext";
+import React, {useContext} from "react";
 import {SelectedNominatorsContext} from "../../context/SelectedNominatorsContext";
 
 export const NominatorTile = ({address, amount, idx}) => {
@@ -25,7 +24,10 @@ export const NominatorTile = ({address, amount, idx}) => {
     return <div className={"flex justify-between p-2 pr-4 border-gray-200 border items-center " + getBackgroundColor()}>
         <input checked={isSelected()} onChange={handleOnChange} type="checkbox"
                className="w-1/12 text-left"/>
-        <p className="w-8/12 text-left self-center">{trimAddress()}</p>
+
+        <div>
+            <p className="w-8/12 text-left self-center">{trimAddress()}</p>
+        </div>
         <p className="mx-4 w-3/12 text-right">{amount}</p>
     </div>
 }
