@@ -42,7 +42,7 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
             <Listbox value={selectedAccount} onChange={setSelectedAccount}>
                 {({open}) => (
                     <>
-                        <div className="mt-1 relative">
+                        <div className="mt-1 relative pr-4">
                             <Listbox.Button
                                 className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-black focus:border-black sm:text-sm">
               <span className="flex items-center">
