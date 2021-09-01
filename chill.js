@@ -107,13 +107,13 @@ async function main() {
             api.tx.staking.chillOther(item.stash)
           );
 
-          // TODO(alex): make sure to slice the `nominatorsBelow` 
-		  // if they are higher than `chillableAmount`
+          // TODO(alex): make sure to slice the `nominatorsBelow`
+          // if they are higher than `chillableAmount`
           /*
-		  if (nominatorsBelow.length > chillableAmount) {
-			// slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
-		  }
-		  */
+		      if (nominatorsBelow.length > chillableAmount) {
+			    // slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
+		      }
+		      */
 
           console.log("Total chillable:", txns.length);
 
@@ -121,23 +121,26 @@ async function main() {
 
           // TODO(alex): Should sign with injector on the UI => `{ signer: injector.signer }`
           // https://polkadot.js.org/docs/extension/usage
-          await tx.signAndSend(account, /*{ signer: injector.signer }, */ ({ status }) => {
-            if (status.isInBlock) {
-              console.log(
-                `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
-              );
-            } else if (status.isBroadcast) {
-              console.log(`🚀 Transaction broadcasted.`);
-            } else if (status.isFinalized) {
-              console.log(
-                `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
-              );
-            } else if (status.isReady) {
-              // let's not be too noisy..
-            } else {
-              console.log(`🤷 Other status ${status}`);
+          await tx.signAndSend(
+            account,
+            /*{ signer: injector.signer }, */ ({ status }) => {
+              if (status.isInBlock) {
+                console.log(
+                  `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
+                );
+              } else if (status.isBroadcast) {
+                console.log(`🚀 Transaction broadcasted.`);
+              } else if (status.isFinalized) {
+                console.log(
+                  `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
+                );
+              } else if (status.isReady) {
+                // let's not be too noisy..
+              } else {
+                console.log(`🤷 Other status ${status}`);
+              }
             }
-          });
+          );
 
           // Artificially waiting for `signAndSend` to work
           await new Promise((resolve) => setTimeout(resolve, 3000));
