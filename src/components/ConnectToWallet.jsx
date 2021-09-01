@@ -53,7 +53,7 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
         accounts.length === 0 ? <p>Please connect Polkadot.js Wallet</p> :
 
             <div className="flex items-center">
-                <p className="p-4">{balance}</p>
+                <p className="pr-4">{balance}</p>
                 <Listbox value={selectedAccount} onChange={handleOnAccountChange}>
                     {({open}) => (
                         <>

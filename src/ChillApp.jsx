@@ -50,10 +50,14 @@ export const ChillApp = ({}) => {
             <StatisticsContext.Provider value={{statistics}}>
                 <SelectedAccountContext.Provider value={{selectedAccount}}>
                     <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                        <div className="flex justify-between">
-                            <h1 className="text-4xl pb-12">Hello chill app </h1>
+                        <div className="flex justify-between items-start pb-6">
+                                <h1 className="text-4xl ">dotsama-chill</h1>
                             <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
                         </div>
+                        <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
+                            chill multiple
+                            nominators in
+                            a batch.</p>
                         <div className="flex justify-center">
                         </div>
                         {isLoading ? <LoadingState/> : <NominatorTable/>}

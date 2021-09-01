@@ -24,7 +24,6 @@ export const NominatorTile = ({address, amount, idx}) => {
     return <div className={"flex justify-between p-2 pr-4 border-gray-200 border items-center " + getBackgroundColor()}>
         <input checked={isSelected()} onChange={handleOnChange} type="checkbox"
                className="w-1/12 text-left"/>
-
         <div>
             <p className="w-8/12 text-left self-center">{trimAddress()}</p>
         </div>
