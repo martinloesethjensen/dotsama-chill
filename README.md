@@ -31,6 +31,7 @@ TODO
     - Loading of nominators below threshold
     - Loading of transaction 
 - Empty state (when no nominators can be chilled) 
+- Range slider sorting on amount
 
 Have a look at the board to see the progress and planned work 👷
 https://github.com/martinloesethjensen/dotsama-chill/projects/1
