@@ -33,8 +33,7 @@ TODO
 - Empty state (when no nominators can be chilled) 
 - Range slider sorting on amount
 
-Have a look at the board to see the progress and planned work 👷
-https://github.com/martinloesethjensen/dotsama-chill/projects/1
+Have a look at [the board](https://github.com/martinloesethjensen/dotsama-chill/projects/1) to see the progress and planned work 👷
 
 ### Installation
 
