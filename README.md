@@ -14,7 +14,23 @@ TODO
 
 ### Roadmap
 
-TODO
+- Statistics overview:
+    - Minimum nominator bond
+    - Nominators 
+    - Max nominators  
+    - Chill threshold
+    - Chillable amount 
+    - Era info  
+- Identicon on addresses
+- Success dialog with block hash and link to subscan
+- Error dialog when trying to chill
+- Loading states:
+    - Loading of nominators below threshold
+    - Loading of transaction 
+- Empty state (when no nominators can be chilled) 
+
+Have a look at the board to see the progress and planned work 👷
+https://github.com/martinloesethjensen/dotsama-chill/projects/1
 
 ### Installation
 
