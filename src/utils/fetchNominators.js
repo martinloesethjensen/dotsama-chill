@@ -1,45 +1,34 @@
 //provider can be kusama or polkadot
 import {ApiPromise, WsProvider} from "@polkadot/api";
 import {getEndpointForNetwork} from "./setProvider";
+import {chillNominators} from "./chillNominators";
 
 
-export const fetchNominators = async (networkName, onSuccess) => {
-    const endpoint = getEndpointForNetwork(networkName);
+export const fetchNominators = async (api, statistics, onSuccess) => {
 
-    const provider = new WsProvider(endpoint);
-    const api = await ApiPromise.create({provider});
+    const {nominatorIds, minNominatorBond} = statistics;
 
-    const nodeName = await api.rpc.system.chain();
+    await api.query.staking.bonded
+        .multi(nominatorIds)
+        .then(async (_controllers) => {
+            const controllers = _controllers.map((controller) =>
+                controller.unwrapOrDefault()
+            );
+            await api.query.staking.ledger
+                .multi(controllers)
+                .then(async (_stakes) => {
+                    const nominatorsBelow = _stakes
+                        .map((stake) => stake.unwrapOrDefault())
+                        .filter((item) => item.total.toBn() < minNominatorBond.toNumber())
+                        .map(({stash, total}) => ({
+                            address: stash.toHuman(),
+                            amount: total.toHuman()
+                        }));
 
-    console.log(`Connected to node ${nodeName}`);
+                    onSuccess(nominatorsBelow)
 
-    const [nominatorKeys, minNominatorBond] = await Promise.all([
-            api.query.staking.nominators.keys(),
-            api.query.staking.minNominatorBond(),
-        ],
-    );
-
-
-    const nominatorIds = nominatorKeys.map(({args: [nominatorId]}) => nominatorId)
-
-    const nominatorsBalancesBelow = new Map();
-
-    await api.query.balances.locks.multi(nominatorIds, (locks) => {
-        let idx = 0
-
-        locks.forEach((lock) => {
-            const {id, amount} = lock[0];
-            if (id.toHuman().trim() === "staking" && amount < minNominatorBond.toNumber()) {
-                nominatorsBalancesBelow.set(nominatorIds[idx], amount);
-            }
-            idx++;
-        })
-        const res = Array.from(nominatorsBalancesBelow).map(([addr, amount]) => ({
-            address: addr.toHuman().trim(),
-            amount : amount.toHuman()
-        }));
-        onSuccess(res.slice(0, 5));//Slice for dev purposes
-    })
+                });
+        });
 
 }
 

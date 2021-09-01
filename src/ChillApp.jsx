@@ -9,16 +9,20 @@ import AccountSelector from "./substrate/AccountSelector";
 import {ConnectToWallet} from "./components/ConnectToWallet";
 import {getApi} from "./utils/getApi";
 import {fetchStatistics} from "./utils/fetchStatistics";
+import {StatisticsContext} from "./context/StatisticsContext";
+import {SelectedAccountContext} from "./context/SelectedAccountContext";
 
 export const ChillApp = ({}) => {
 
     const [nominators, setNominators] = useState([]);
     const [selectedNominators, setSelectedNominators] = useState([]);
+
     const [statistics, setStatistics] = useState([]);
+
+    const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
     useEffect(() => {
         setupChillApp();
@@ -31,6 +35,7 @@ export const ChillApp = ({}) => {
 
         fetchNominators(api, statistics, onNominatorsFetched);
         setStatistics(statistics);
+
     }
 
 
@@ -43,15 +48,19 @@ export const ChillApp = ({}) => {
 
     return <NominatorsContext.Provider value={{nominators, setNominators}}>
         <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
-            <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                <div className="flex justify-between">
-                    <h1 className="text-4xl pb-12">Hello chill app </h1>
-                    <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
-                </div>
-                <div className="flex justify-center">
-                </div>
-                {isLoading ? <LoadingState/> : <NominatorTable/>}
-            </div>
+            <StatisticsContext.Provider value={{statistics}}>
+                <SelectedAccountContext.Provider value={{selectedAccount}}>
+                    <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
+                        <div className="flex justify-between">
+                            <h1 className="text-4xl pb-12">Hello chill app </h1>
+                            <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
+                        </div>
+                        <div className="flex justify-center">
+                        </div>
+                        {isLoading ? <LoadingState/> : <NominatorTable/>}
+                    </div>
+                </SelectedAccountContext.Provider>
+            </StatisticsContext.Provider>
         </SelectedNominatorsContext.Provider>
     </NominatorsContext.Provider>
 }

@@ -1,23 +1,33 @@
-export const chillNominators = async (nominatorsList) => {
+import {getApi} from "./getApi";
+import {web3FromSource} from "@polkadot/extension-dapp";
 
+export const chillNominators = async (statistics, account, nominatorsList) => {
 
+    const api = await getApi();
 
-    const transactions = nominatorsList.map((item) =>
-        api.tx.staking.chillOther(item.stash)
+    const {chillableAmount} = statistics;
+
+    //createTransactionBatch
+    const transactions = nominatorsList.map(nominator =>
+        api.tx.staking.chillOther(nominator.stash)
     );
 
-    // TODO(alex): make sure to slice the `nominatorsBelow`
+
     // if they are higher than `chillableAmount`
-    /*
-    if (nominatorsBelow.length > chillableAmount) {
-      // slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
+    if (nominatorsList.length > chillableAmount) {
+        nominatorsList.slice(0, chillableAmount - 1);
     }
-    */
+
+
+    const injector = await web3FromSource(account.meta.source);
 
     console.log("Total chillable:", transactions.length);
 
+    console.log("ACCOUNT")
+    console.log(account)
+
     const tx = api.tx.utility.batch(transactions);
-    await tx.signAndSend(account, /*{ signer: injector.signer }, */ ({status}) => {
+    await tx.signAndSend(account.address, {signer: injector.signer}, ({status}) => {
         if (status.isInBlock) {
             console.log(
                 `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`

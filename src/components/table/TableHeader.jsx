@@ -6,16 +6,18 @@ import {chillNominators} from "../../utils/chillNominators";
 import {SortButton} from "./SortButton";
 import {RangeSlider} from "../slider/RangeSlider";
 import {TxButton} from "../../substrate-lib/components";
+import {StatisticsContext} from "../../context/StatisticsContext";
+import {SelectedAccountContext} from "../../context/SelectedAccountContext";
 
 export const TableHeader = () => {
 
     const {nominators, setNominators} = useContext(NominatorsContext);
     const {selectedNominators} = useContext(SelectedNominatorsContext);
-
+    const {statistics} = useContext(StatisticsContext);
+    const {selectedAccount} = useContext(SelectedAccountContext);
 
     const handleOnClick = () => {
-        //Todo chill the nominators
-        chillNominators(selectedNominators);
+        chillNominators(statistics, selectedAccount, selectedNominators);
 
     }
 

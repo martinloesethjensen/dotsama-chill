@@ -1,8 +1,18 @@
-import {getEndpointForNetwork} from "./setProvider";
+import {getEndpointForNetwork, SUPPORTED_NETWORKS} from "./setProvider";
 import {ApiPromise, WsProvider} from "@polkadot/api";
 
-export const getApi = async (networkName) => {
-    const endpoint = getEndpointForNetwork(networkName);
+
+let _api = null;
+
+export const getApi = async () => {
+
+    //Singleton here :D
+    if (_api !== null) {
+        console.log("used api instance from singleton")
+        return _api;
+    }
+
+    const endpoint = getEndpointForNetwork(SUPPORTED_NETWORKS.POLKADOT);
 
     const provider = new WsProvider(endpoint);
     const api = await ApiPromise.create({provider});
@@ -11,5 +21,6 @@ export const getApi = async (networkName) => {
 
     console.log(`Connected to node ${nodeName}`);
 
-    return api;
+    _api = api;
+    return _api;
 }
