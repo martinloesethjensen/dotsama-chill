@@ -38,7 +38,7 @@ export const fetchNominators = async (networkName, onSuccess) => {
             address: addr.toHuman().trim(),
             amount : amount.toHuman()
         }));
-        onSuccess(res.slice(0, 20));//Slice for dev purposes
+        onSuccess(res.slice(0, 5));//Slice for dev purposes
     })
 
 }

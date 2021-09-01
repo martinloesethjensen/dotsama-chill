@@ -14,6 +14,9 @@ export const ChillApp = ({}) => {
     const [selectedNominators, setSelectedNominators] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
+
+
     useEffect(() => {
         fetchNominators(SUPPORTED_NETWORKS.POLKADOT, onNominatorsFetched);
     }, [])
@@ -31,7 +34,7 @@ export const ChillApp = ({}) => {
             <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
                 <div className="flex justify-between">
                     <h1 className="text-4xl pb-12">Hello chill app </h1>
-                    <ConnectToWallet/>
+                    <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
                 </div>
                 <div className="flex justify-center">
                 </div>
