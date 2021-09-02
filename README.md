@@ -7,6 +7,8 @@ You can access the app [here](https://martinloesethjensen.github.io/dotsama-chil
 
 TODO
 
+![Screenshot 2021-09-02 at 10 16 41](https://user-images.githubusercontent.com/31356774/131870675-6bfceb5e-ba1d-4db4-9b6e-39c66aba1ca5.png)
+
 ### Why 
 
 TODO
