@@ -1,7 +1,7 @@
 # dotsama-chill
 
 You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/). 
-> Please not that it can take a minute or two for it to load all the nominators that can be chilled.  
+> Please note that it can take a minute or two for it to load all the nominators that can be chilled.  
 
 ## Introduction
 
@@ -32,6 +32,8 @@ TODO
     - Loading of transaction 
 - Empty state (when no nominators can be chilled) 
 - Range slider sorting on amount
+- Switching between networks (Polkadot & Kusama)
+    - Kusama when this would become a necessity => currently there's no threshold on Kusama and the current nominators are way below max nominator count.
 
 Have a look at [the board](https://github.com/martinloesethjensen/dotsama-chill/projects/1) to see the progress and planned work 👷
 
