@@ -16,7 +16,7 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
 
 
     const startWeb3 = async () => {
-        const allInjected = await web3Enable('my cool dapp');
+        const allInjected = await web3Enable('dotsama-chill');
 
         const allAccounts = await web3Accounts();
 
@@ -27,7 +27,6 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
         fetchBalance(allAccounts[0]);
 
     }
-
 
 
     const handleOnAccountChange = async (newAccount) => {
