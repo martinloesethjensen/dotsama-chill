@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dotsama-chill/static/css/main.ebfe03ef.chunk.css",
-    "main.js": "/dotsama-chill/static/js/main.6f67f8b1.chunk.js",
-    "main.js.map": "/dotsama-chill/static/js/main.6f67f8b1.chunk.js.map",
+    "main.js": "/dotsama-chill/static/js/main.26e6e373.chunk.js",
+    "main.js.map": "/dotsama-chill/static/js/main.26e6e373.chunk.js.map",
     "runtime-main.js": "/dotsama-chill/static/js/runtime-main.8910d813.js",
     "runtime-main.js.map": "/dotsama-chill/static/js/runtime-main.8910d813.js.map",
     "static/js/2.c66365d8.chunk.js": "/dotsama-chill/static/js/2.c66365d8.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8910d813.js",
     "static/js/2.c66365d8.chunk.js",
     "static/css/main.ebfe03ef.chunk.css",
-    "static/js/main.6f67f8b1.chunk.js"
+    "static/js/main.26e6e373.chunk.js"
   ]
 }
