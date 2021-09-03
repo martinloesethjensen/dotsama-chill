@@ -1,9 +1,9 @@
 import {getApi} from "./getApi";
 import {web3FromSource} from "@polkadot/extension-dapp";
 
-export const chillNominators = async (statistics, account, nominatorsList) => {
+export const chillNominators = async (statistics, account, nominatorsList,selectedNetwork) => {
 
-    const api = await getApi();
+    const api = await getApi(selectedNetwork);
 
     const {chillableAmount} = statistics;
 
@@ -18,14 +18,6 @@ export const chillNominators = async (statistics, account, nominatorsList) => {
 
 
     const injector = await web3FromSource(account.meta.source);
-
-    console.log("Total chillable:", transactions.length);
-
-    console.log("Nominator")
-
-
-    console.log(nominatorsList)
-    console.log(transactions)
 
 
     // return;

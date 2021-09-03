@@ -19,7 +19,7 @@ export const TableHeader = () => {
     const {selectedNetwork} = useContext(NetworkContext);
 
     const handleOnClick = () => {
-        chillNominators(statistics, selectedAccount, selectedNominators);
+        chillNominators(statistics, selectedAccount, selectedNominators, selectedNetwork);
 
     }
 
