@@ -5,7 +5,6 @@ import {Button} from "../Button";
 import {chillNominators} from "../../utils/chillNominators";
 import {SortButton} from "./SortButton";
 import {RangeSlider} from "../slider/RangeSlider";
-import {TxButton} from "../../substrate-lib/components";
 import {StatisticsContext} from "../../context/StatisticsContext";
 import {SelectedAccountContext} from "../../context/SelectedAccountContext";
 
