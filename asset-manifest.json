@@ -1,24 +1,20 @@
 {
   "files": {
     "main.css": "/dotsama-chill/static/css/main.e08583f8.chunk.css",
-    "main.js": "/dotsama-chill/static/js/main.8aba3ffa.chunk.js",
-    "main.js.map": "/dotsama-chill/static/js/main.8aba3ffa.chunk.js.map",
+    "main.js": "/dotsama-chill/static/js/main.d6bbff9b.chunk.js",
+    "main.js.map": "/dotsama-chill/static/js/main.d6bbff9b.chunk.js.map",
     "runtime-main.js": "/dotsama-chill/static/js/runtime-main.8910d813.js",
     "runtime-main.js.map": "/dotsama-chill/static/js/runtime-main.8910d813.js.map",
-    "static/css/2.6b0489c8.chunk.css": "/dotsama-chill/static/css/2.6b0489c8.chunk.css",
-    "static/js/2.a4558ffd.chunk.js": "/dotsama-chill/static/js/2.a4558ffd.chunk.js",
-    "static/js/2.a4558ffd.chunk.js.map": "/dotsama-chill/static/js/2.a4558ffd.chunk.js.map",
+    "static/js/2.c16ab658.chunk.js": "/dotsama-chill/static/js/2.c16ab658.chunk.js",
+    "static/js/2.c16ab658.chunk.js.map": "/dotsama-chill/static/js/2.c16ab658.chunk.js.map",
     "index.html": "/dotsama-chill/index.html",
-    "static/css/2.6b0489c8.chunk.css.map": "/dotsama-chill/static/css/2.6b0489c8.chunk.css.map",
     "static/css/main.e08583f8.chunk.css.map": "/dotsama-chill/static/css/main.e08583f8.chunk.css.map",
-    "static/js/2.a4558ffd.chunk.js.LICENSE.txt": "/dotsama-chill/static/js/2.a4558ffd.chunk.js.LICENSE.txt",
-    "static/media/semantic.min.css": "/dotsama-chill/static/media/outline-icons.ddae9b1b.woff"
+    "static/js/2.c16ab658.chunk.js.LICENSE.txt": "/dotsama-chill/static/js/2.c16ab658.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8910d813.js",
-    "static/css/2.6b0489c8.chunk.css",
-    "static/js/2.a4558ffd.chunk.js",
+    "static/js/2.c16ab658.chunk.js",
     "static/css/main.e08583f8.chunk.css",
-    "static/js/main.8aba3ffa.chunk.js"
+    "static/js/main.d6bbff9b.chunk.js"
   ]
 }
