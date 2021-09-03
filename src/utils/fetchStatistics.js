@@ -1,11 +1,12 @@
 export const fetchStatistics = async (api) => {
 
 
-    const [nominatorKeys, minNominatorBond, maxNominatorsCount, chillThreshold] = await Promise.all([
+    const [nominatorKeys, minNominatorBond, maxNominatorsCount, chillThreshold, currentEra] = await Promise.all([
             api.query.staking.nominators.keys(),
             api.query.staking.minNominatorBond(),
             api.query.staking.maxNominatorsCount(),
             api.query.staking.chillThreshold(),
+            api.query.staking.currentEra(),
         ],
     );
 
@@ -25,6 +26,8 @@ export const fetchStatistics = async (api) => {
         chillableAmount,
         nominatorIds,
         threshold,
-        minNominatorBond
+        minNominatorBond,
+        currentEra,
+        maxNominatorsCount
     }
 }
