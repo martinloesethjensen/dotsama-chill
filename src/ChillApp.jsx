@@ -10,13 +10,19 @@ import {getApi} from "./utils/getApi";
 import {fetchStatistics} from "./utils/fetchStatistics";
 import {StatisticsContext} from "./context/StatisticsContext";
 import {SelectedAccountContext} from "./context/SelectedAccountContext";
+import {StatisticsBox} from "./components/statistics/StatisticsBox";
 
 export const ChillApp = ({}) => {
 
     const [nominators, setNominators] = useState([]);
     const [selectedNominators, setSelectedNominators] = useState([]);
 
-    const [statistics, setStatistics] = useState([]);
+    const [statistics, setStatistics] = useState({
+        chillableAmount: 0,
+        nominatorIds: 0,
+        threshold: 0,
+        minNominatorBond: 0
+    });
 
     const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
@@ -51,15 +57,14 @@ export const ChillApp = ({}) => {
                 <SelectedAccountContext.Provider value={{selectedAccount}}>
                     <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
                         <div className="flex justify-between items-start pb-6">
-                                <h1 className="text-4xl ">dotsama-chill</h1>
+                            <h1 className="text-4xl ">dotsama-chill</h1>
                             <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
                         </div>
                         <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
                             chill multiple
                             nominators in
                             a batch.</p>
-                        <div className="flex justify-center">
-                        </div>
+                        <StatisticsBox {...statistics}/>
                         {isLoading ? <LoadingState/> : <NominatorTable/>}
                     </div>
                 </SelectedAccountContext.Provider>
