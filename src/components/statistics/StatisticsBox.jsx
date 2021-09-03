@@ -6,6 +6,8 @@ export const StatisticsBox = ({
   nominatorIds,
   threshold,
   minNominatorBond,
+  currentEra,
+  maxNominatorsCount,
 }) => {
   const minNominatorBondOrDefault = () =>
     minNominatorBond === 0 ? "Loading" : minNominatorBond.toHuman();
@@ -14,6 +16,10 @@ export const StatisticsBox = ({
   const chillableAmountOrDefault = () =>
     chillableAmount === 0 ? "Loading" : chillableAmount;
   const thresholdOrDefault = () => (threshold === 0 ? "Loading" : threshold);
+  const currentEraOrDefault = () =>
+    currentEra === 0 ? "Loading" : currentEra.toHuman();
+  const maxNominatorsCountOrDefault = () =>
+    maxNominatorsCount === 0 ? "Loading" : maxNominatorsCount.toHuman();
   return (
     <div className="flex justify-between mb-8">
       <StatisticsGroup

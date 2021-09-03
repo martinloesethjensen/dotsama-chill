@@ -21,7 +21,9 @@ export const ChillApp = ({}) => {
         chillableAmount: 0,
         nominatorIds: 0,
         threshold: 0,
-        minNominatorBond: 0
+        minNominatorBond: 0,
+        currentEra: 0,
+        maxNominatorsCount: 0
     });
 
     const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
