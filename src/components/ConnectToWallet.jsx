@@ -1,9 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import {web3Accounts, web3Enable} from "@polkadot/extension-dapp";
 import {Listbox, Transition} from '@headlessui/react'
 import {CheckIcon, SelectorIcon} from '@heroicons/react/solid'
 import {getApi} from "../utils/getApi";
+import {NetworkContext} from "../context/NetworkContext";
 
 
 function classNames(...classes) {
@@ -11,18 +12,25 @@ function classNames(...classes) {
 }
 
 export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
+    const {selectedNetwork} = useContext(NetworkContext);
+
     const [accounts, setAccounts] = useState([]);
     const [balance, setBalance] = useState("");
 
 
+
     const startWeb3 = async () => {
+        console.log("Fetching Accounts")
         const allInjected = await web3Enable('dotsama-chill');
 
         const allAccounts = await web3Accounts();
 
+        console.log("got accounts")
 
         setAccounts(allAccounts);
         setSelectedAccount(allAccounts[0]);
+
+        console.log(selectedAccount)
 
         fetchBalance(allAccounts[0]);
 
@@ -36,7 +44,7 @@ export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
     }
 
     const fetchBalance = async (account) => {
-        const api = await getApi();
+        const api = await getApi(selectedNetwork);
 
         const {data: {free: previousFree}} = await api.query.system.account(account.address);
         setBalance(previousFree.toHuman());
