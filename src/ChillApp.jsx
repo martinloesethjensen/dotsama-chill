@@ -5,14 +5,13 @@ import {LoadingState} from "./components/LoadingState";
 import {fetchNominators} from "./utils/fetchNominators";
 import {SUPPORTED_NETWORKS} from "./utils/setProvider";
 import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
-import {ConnectToWallet} from "./components/ConnectToWallet";
 import {getApi} from "./utils/getApi";
 import {fetchStatistics} from "./utils/fetchStatistics";
 import {StatisticsContext} from "./context/StatisticsContext";
 import {SelectedAccountContext} from "./context/SelectedAccountContext";
 import {StatisticsBox} from "./components/statistics/StatisticsBox";
-import {SwitchNetwork} from "./components/networkswitch/SwitchNetwork";
 import {NetworkContext} from "./context/NetworkContext";
+import {Header} from "./components/Header";
 
 export const ChillApp = ({}) => {
 
@@ -30,7 +29,7 @@ export const ChillApp = ({}) => {
     const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
     const [isLoadingNominators, setIsLoadingNominators] = useState(true);
-    const [isLoadingStatistics, setIsLoadingStatistics] = useState(true)
+    const [isLoadingStatistics, setIsLoadingStatistics] = useState(true);
 
 
     useEffect(() => {
@@ -61,14 +60,10 @@ export const ChillApp = ({}) => {
     return <NominatorsContext.Provider value={{nominators, setNominators}}>
         <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
             <StatisticsContext.Provider value={{statistics}}>
-                <SelectedAccountContext.Provider value={{selectedAccount}}>
+                <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount}}>
                     <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
-                        <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                            <SwitchNetwork selectedNetwork={selectedNetwork} setSelectedNetwork={setSelectedNetwork}/>
-                            <div className="flex justify-between items-start pb-6">
-                                <h1 className="text-4xl ">dotsama-chill</h1>
-                                <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount} />
-                            </div>
+                        <div className=" px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
+                            <Header/>
                             <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
                                 chill multiple
                                 nominators in

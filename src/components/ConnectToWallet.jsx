@@ -5,18 +5,19 @@ import {Listbox, Transition} from '@headlessui/react'
 import {CheckIcon, SelectorIcon} from '@heroicons/react/solid'
 import {getApi} from "../utils/getApi";
 import {NetworkContext} from "../context/NetworkContext";
+import {SelectedAccountContext} from "../context/SelectedAccountContext";
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export function ConnectToWallet({selectedAccount, setSelectedAccount}) {
+export function ConnectToWallet() {
     const {selectedNetwork} = useContext(NetworkContext);
+    const {selectedAccount, setSelectedAccount} = useContext(SelectedAccountContext);
 
     const [accounts, setAccounts] = useState([]);
     const [balance, setBalance] = useState("");
-
 
 
     const startWeb3 = async () => {
