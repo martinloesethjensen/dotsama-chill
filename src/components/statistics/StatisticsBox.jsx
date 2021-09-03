@@ -8,18 +8,19 @@ export const StatisticsBox = ({
   minNominatorBond,
   currentEra,
   maxNominatorsCount,
+  isLoading,
 }) => {
   const minNominatorBondOrDefault = () =>
-    minNominatorBond === 0 ? "Loading" : minNominatorBond.toHuman();
+    isLoading ? "Loading" : minNominatorBond.toHuman();
   const nominatorIdsOrDefault = () =>
-    nominatorIds === 0 ? "Loading" : nominatorIds.length;
+    isLoading ? "Loading" : nominatorIds.length;
   const chillableAmountOrDefault = () =>
-    chillableAmount === 0 ? "Loading" : chillableAmount;
-  const thresholdOrDefault = () => (threshold === 0 ? "Loading" : threshold);
+    isLoading ? "Loading" : chillableAmount;
+  const thresholdOrDefault = () => (isLoading ? "Loading" : threshold);
   const currentEraOrDefault = () =>
-    currentEra === 0 ? "Loading" : currentEra.toHuman();
+    isLoading ? "Loading" : currentEra.toHuman();
   const maxNominatorsCountOrDefault = () =>
-    maxNominatorsCount === 0 ? "Loading" : maxNominatorsCount.toHuman();
+    isLoading ? "Loading" : maxNominatorsCount.toHuman();
   return (
     <div className="flex justify-between mb-8">
       <StatisticsGroup
@@ -32,7 +33,7 @@ export const StatisticsBox = ({
       <div></div>
       <StatisticsGroup
         first={{
-          name: "Chillable Amount",
+          name: "Max Chillable Amount",
           count: chillableAmountOrDefault(),
           textColor: "yellow-500",
         }}

@@ -11,11 +11,14 @@ import {fetchStatistics} from "./utils/fetchStatistics";
 import {StatisticsContext} from "./context/StatisticsContext";
 import {SelectedAccountContext} from "./context/SelectedAccountContext";
 import {StatisticsBox} from "./components/statistics/StatisticsBox";
+import {SwitchNetwork} from "./components/networkswitch/SwitchNetwork";
+import {NetworkContext} from "./context/NetworkContext";
 
 export const ChillApp = ({}) => {
 
     const [nominators, setNominators] = useState([]);
     const [selectedNominators, setSelectedNominators] = useState([]);
+    const [selectedNetwork, setSelectedNetwork] = useState(SUPPORTED_NETWORKS.POLKADOT);
 
     const [statistics, setStatistics] = useState({
         chillableAmount: 0,
@@ -28,20 +31,24 @@ export const ChillApp = ({}) => {
 
     const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingNominators, setIsLoadingNominators] = useState(true);
+    const [isLoadingStatistics, setIsLoadingStatistics] = useState(true)
 
 
     useEffect(() => {
         setupChillApp();
-    }, [])
+    }, [selectedNetwork])
 
     const setupChillApp = async () => {
-        const api = await getApi(SUPPORTED_NETWORKS.POLKADOT);
+        setIsLoadingNominators(true)
+        setIsLoadingStatistics(true);
+        const api = await getApi(selectedNetwork);
         const statistics = await fetchStatistics(api);
 
 
         fetchNominators(api, statistics, onNominatorsFetched);
         setStatistics(statistics);
+        setIsLoadingStatistics(false)
 
     }
 
@@ -49,7 +56,7 @@ export const ChillApp = ({}) => {
     const onNominatorsFetched = nominatorsList => {
         nominatorsList.sort((a, b) => a.amount > b.amount ? 1 : -1);
         setNominators(nominatorsList);
-        setIsLoading(false);
+        setIsLoadingNominators(false);
     }
 
 
@@ -57,18 +64,21 @@ export const ChillApp = ({}) => {
         <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
             <StatisticsContext.Provider value={{statistics}}>
                 <SelectedAccountContext.Provider value={{selectedAccount}}>
-                    <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                        <div className="flex justify-between items-start pb-6">
-                            <h1 className="text-4xl ">dotsama-chill</h1>
-                            <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount}/>
+                    <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
+                        <div className=" p-24 h-screen" style={{backgroundColor: "#f5f3f1"}}>
+                            <SwitchNetwork selectedNetwork={selectedNetwork} setSelectedNetwork={setSelectedNetwork}/>
+                            <div className="flex justify-between items-start pb-6">
+                                <h1 className="text-4xl ">dotsama-chill</h1>
+                                <ConnectToWallet selectedAccount={selectedAccount} setSelectedAccount={setSelectedAccount} />
+                            </div>
+                            <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
+                                chill multiple
+                                nominators in
+                                a batch.</p>
+                            <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
+                            {isLoadingNominators ? <LoadingState/> : <NominatorTable/>}
                         </div>
-                        <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
-                            chill multiple
-                            nominators in
-                            a batch.</p>
-                        <StatisticsBox {...statistics}/>
-                        {isLoading ? <LoadingState/> : <NominatorTable/>}
-                    </div>
+                    </NetworkContext.Provider>
                 </SelectedAccountContext.Provider>
             </StatisticsContext.Provider>
         </SelectedNominatorsContext.Provider>
