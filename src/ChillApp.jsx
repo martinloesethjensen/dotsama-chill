@@ -1,7 +1,6 @@
 import {NominatorTable} from "./components/table/NominatorTable";
 import {NominatorsContext} from "./context/NominatorsContext";
 import React, {useEffect, useState} from "react";
-import {LoadingState} from "./components/LoadingState";
 import {fetchNominators} from "./utils/fetchNominators";
 import {SUPPORTED_NETWORKS} from "./utils/setProvider";
 import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
@@ -64,14 +63,14 @@ export const ChillApp = ({}) => {
             <StatisticsContext.Provider value={{statistics}}>
                 <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount}}>
                     <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
-                        <div className=" px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
+                        <div className="px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
                             <Header/>
                             <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
                                 chill multiple
                                 nominators in
                                 a batch.</p>
                             <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
-                            {isLoadingNominators ? <LoadingState/> : <NominatorTable/>}
+                         <NominatorTable isLoading={isLoadingNominators}/>
                         </div>
                     </NetworkContext.Provider>
                 </SelectedAccountContext.Provider>
