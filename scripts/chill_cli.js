@@ -89,6 +89,27 @@ async function main() {
   console.log("The current minNominatorBond is: " + minNominatorBond.toHuman());
   console.log("Total nominators:", nominatorIds.length);
 
+  const nominatorPromises = nominatorIds.map(async (stash) => {
+    const controller = (await api.query.staking.bonded(stash)).unwrap();
+    const ledger = await api.query.staking.ledger(controller);
+    const stake = ledger.unwrapOrDefault().total.toBn();
+    return { controller, stake, ledger };
+  });
+
+  const allNominatorsRaw = await Promise.all(nominatorPromises);
+
+  const nominatorsBelow = allNominatorsRaw.filter(
+    ({ controller, stake, ledger }) => {
+      if (stake.isZero() && ledger.isNone) {
+        console.log(`😱 ${controller} seems to have no ledger. This is a state bug.`);
+        return false;
+      } else {
+        return true;
+      }
+    }
+  ).filter(({ controller, stake, ledger }) => stake < minNominatorBond.toNumber());;
+  
+
   await api.query.staking.bonded
     .multi(nominatorIds)
     .then(async (_controllers) => {
@@ -107,8 +128,8 @@ async function main() {
             api.tx.staking.chillOther(item.stash)
           );
 
-          // TODO(alex): make sure to slice the `nominatorsBelow` 
-		  // if they are higher than `chillableAmount`
+          // TODO(alex): make sure to slice the `nominatorsBelow`
+          // if they are higher than `chillableAmount`
           /*
 		  if (nominatorsBelow.length > chillableAmount) {
 			// slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
@@ -119,25 +140,30 @@ async function main() {
 
           const tx = api.tx.utility.batch(txns);
 
+          return;
+
           // TODO(alex): Should sign with injector on the UI => `{ signer: injector.signer }`
           // https://polkadot.js.org/docs/extension/usage
-          await tx.signAndSend(account, /*{ signer: injector.signer }, */ ({ status }) => {
-            if (status.isInBlock) {
-              console.log(
-                `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
-              );
-            } else if (status.isBroadcast) {
-              console.log(`🚀 Transaction broadcasted.`);
-            } else if (status.isFinalized) {
-              console.log(
-                `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
-              );
-            } else if (status.isReady) {
-              // let's not be too noisy..
-            } else {
-              console.log(`🤷 Other status ${status}`);
+          await tx.signAndSend(
+            account,
+            /*{ signer: injector.signer }, */ ({ status }) => {
+              if (status.isInBlock) {
+                console.log(
+                  `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
+                );
+              } else if (status.isBroadcast) {
+                console.log(`🚀 Transaction broadcasted.`);
+              } else if (status.isFinalized) {
+                console.log(
+                  `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
+                );
+              } else if (status.isReady) {
+                // let's not be too noisy..
+              } else {
+                console.log(`🤷 Other status ${status}`);
+              }
             }
-          });
+          );
 
           // Artificially waiting for `signAndSend` to work
           await new Promise((resolve) => setTimeout(resolve, 3000));
