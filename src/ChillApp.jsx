@@ -11,6 +11,9 @@ import {SelectedAccountContext} from "./context/SelectedAccountContext";
 import {StatisticsBox} from "./components/statistics/StatisticsBox";
 import {NetworkContext} from "./context/NetworkContext";
 import {Header} from "./components/Header";
+import {BannerState, showBanner} from "./components/state/BannerState";
+import {BannerContext} from "./context/BannerContext";
+import {Banner} from "./components/Banner";
 
 export const ChillApp = ({}) => {
 
@@ -32,8 +35,11 @@ export const ChillApp = ({}) => {
     const [isLoadingNominators, setIsLoadingNominators] = useState(true);
     const [isLoadingStatistics, setIsLoadingStatistics] = useState(true);
 
+    const [bannerState, setBannerState] = useState({...BannerState})
+
 
     useEffect(() => {
+
         setupChillApp();
     }, [selectedNetwork])
 
@@ -63,15 +69,20 @@ export const ChillApp = ({}) => {
             <StatisticsContext.Provider value={{statistics}}>
                 <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount}}>
                     <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
-                        <div className="px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                            <Header/>
-                            <p className="text-md pb-6">A tool to list nominators below threshold and has the option to
-                                chill multiple
-                                nominators in
-                                a batch.</p>
-                            <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
-                         <NominatorTable isLoading={isLoadingNominators}/>
-                        </div>
+                        <BannerContext.Provider
+                            value={{showBanner: (mode, name,status) => showBanner({setBannerState}, mode, name,status)}}>
+                            <Banner bannerState={bannerState} setBannerState={setBannerState}/>
+                            <div className="px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
+                                <Header/>
+                                <p className="text-md pb-6">A tool to list nominators below threshold and has the option
+                                    to
+                                    chill multiple
+                                    nominators in
+                                    a batch.</p>
+                                <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
+                                <NominatorTable isLoading={isLoadingNominators}/>
+                            </div>
+                        </BannerContext.Provider>
                     </NetworkContext.Provider>
                 </SelectedAccountContext.Provider>
             </StatisticsContext.Provider>

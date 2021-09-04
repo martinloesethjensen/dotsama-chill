@@ -8,6 +8,7 @@ import {StatisticsContext} from "../../context/StatisticsContext";
 import {SelectedAccountContext} from "../../context/SelectedAccountContext";
 import {NetworkContext} from "../../context/NetworkContext";
 import {NominatorsContext} from "../../context/NominatorsContext";
+import {BannerContext} from "../../context/BannerContext";
 
 
 export const ChillButton = () => {
@@ -17,9 +18,14 @@ export const ChillButton = () => {
     const {selectedNetwork} = useContext(NetworkContext);
     const {nominators} = useContext(NominatorsContext);
 
+    const {showBanner} = useContext(BannerContext)
+
 
     const handleOnClick = () => {
-        chillNominators(statistics, selectedAccount, selectedNominators, selectedNetwork);
+        if (selectedNominators.length === 0) {
+            return;
+        }
+        chillNominators(statistics, selectedAccount, selectedNominators, selectedNetwork, showBanner);
 
     }
 

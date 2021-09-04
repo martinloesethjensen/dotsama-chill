@@ -40,12 +40,12 @@ export const StatisticsBox = ({
                 first={{
                     name: "Max Chillable Amount",
                     count: chillableAmountOrDefault(),
-                    textColor: "yellow-500",
+                    textColor: "yellow-300",
                 }}
                 second={{
                     name: "Current Era",
                     count: currentEraOrDefault(),
-                    textColor: "yellow-500",
+                    textColor: "yellow-300",
                 }}
             />
             <div></div>
