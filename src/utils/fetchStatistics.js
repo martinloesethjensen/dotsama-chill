@@ -28,6 +28,7 @@ export const fetchStatistics = async (api) => {
         threshold,
         minNominatorBond,
         currentEra,
-        maxNominatorsCount
+        maxNominatorsCount,
+        chillThreshold
     }
 }
