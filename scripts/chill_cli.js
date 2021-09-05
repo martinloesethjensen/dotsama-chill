@@ -89,7 +89,7 @@ async function main() {
   console.log("The current minNominatorBond is: " + minNominatorBond.toHuman());
   console.log("Total nominators:", nominatorIds.length);
 
-  const nominatorPromises = nominatorIds.map(async (stash) => {
+  const nominatorPromises = nominatorIds.slice(0, 100).map(async (stash) => {
     const controller = (await api.query.staking.bonded(stash)).unwrap();
     const ledger = await api.query.staking.ledger(controller);
     const stake = ledger.unwrapOrDefault().total.toBn();
@@ -98,17 +98,25 @@ async function main() {
 
   const allNominatorsRaw = await Promise.all(nominatorPromises);
 
-  const nominatorsBelow = allNominatorsRaw.filter(
-    ({ controller, stake, ledger }) => {
+  const nominatorsBelow = allNominatorsRaw
+    .filter(({ controller, stake, ledger }) => {
       if (stake.isZero() && ledger.isNone) {
-        console.log(`😱 ${controller} seems to have no ledger. This is a state bug.`);
+        console.log(
+          `😱 ${controller} seems to have no ledger. This is a state bug.`
+        );
         return false;
       } else {
         return true;
       }
-    }
-  ).filter(({ controller, stake, ledger }) => stake < minNominatorBond.toNumber());;
-  
+    })
+    .filter(
+      ({ controller, stake, ledger }) => stake < minNominatorBond.toNumber()
+    )
+    .map(({controller, stake}) => ({ address: controller.toHuman(), amount: stake.toHuman() }));
+
+  console.log(nominatorsBelow[0]);
+
+  return;
 
   await api.query.staking.bonded
     .multi(nominatorIds)
