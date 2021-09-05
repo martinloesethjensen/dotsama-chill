@@ -1,32 +1,33 @@
 //provider can be kusama or polkadot
 
-
 export const fetchNominators = async (api, statistics, onSuccess) => {
+  const { nominatorIds, minNominatorBond } = statistics;
 
-    const {nominatorIds, minNominatorBond} = statistics;
+  const nominatorPromises = nominatorIds.map(async (stash) => {
+    const controller = (await api.query.staking.bonded(stash)).unwrap();
+    const ledger = await api.query.staking.ledger(controller);
+    const stake = ledger.unwrapOrDefault().total.toBn();
+    return { controller, stake, ledger };
+  });
 
-    await api.query.staking.bonded
-        .multi(nominatorIds)
-        .then(async (_controllers) => {
-            const controllers = _controllers.map((controller) =>
-                controller.unwrapOrDefault()
-            );
-            await api.query.staking.ledger
-                .multi(controllers)
-                .then(async (_stakes) => {
-                    const nominatorsBelow = _stakes
-                        .map((stake) => stake.unwrapOrDefault())
-                        .filter((item) => item.total.toBn() < minNominatorBond.toNumber())
-                        .map(({stash, total}) => ({
-                            address: stash.toHuman(),
-                            amount: total.toHuman(),
-                        }));
+  const allNominatorsRaw = await Promise.all(nominatorPromises);
 
-                    onSuccess(nominatorsBelow)
+  const nominatorsBelow = allNominatorsRaw
+    .filter(({ controller, stake, ledger }) => {
+      if (stake.isZero() && ledger.isNone) {
+        console.log(
+          `😱 ${controller} seems to have no ledger. This is a state bug.`
+        );
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .filter(({ stake }) => stake < minNominatorBond.toNumber())
+    .map(({ controller, stake }) => ({
+      address: controller.toHuman(),
+      amount: stake.toHuman(),
+    }));
 
-                });
-        });
-
-}
-
-
+  onSuccess(nominatorsBelow);
+};

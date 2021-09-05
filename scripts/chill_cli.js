@@ -89,60 +89,63 @@ async function main() {
   console.log("The current minNominatorBond is: " + minNominatorBond.toHuman());
   console.log("Total nominators:", nominatorIds.length);
 
-  await api.query.staking.bonded
-    .multi(nominatorIds)
-    .then(async (_controllers) => {
-      const controllers = _controllers.map((controller) =>
-        controller.unwrapOrDefault()
-      );
+  const nominatorPromises = nominatorIds.map(async (stash) => {
+    const controller = (await api.query.staking.bonded(stash)).unwrap();
+    const ledger = await api.query.staking.ledger(controller);
+    const stake = ledger.unwrapOrDefault().total.toBn();
+    return { controller, stake, ledger };
+  });
 
-      await api.query.staking.ledger
-        .multi(controllers)
-        .then(async (_stakes) => {
-          const nominatorsBelow = _stakes
-            .map((stake) => stake.unwrapOrDefault())
-            .filter((item) => item.total.toBn() < minNominatorBond.toNumber());
+  const allNominatorsRaw = await Promise.all(nominatorPromises);
 
-          const txns = nominatorsBelow.map((item) =>
-            api.tx.staking.chillOther(item.stash)
-          );
+  const nominatorsBelow = allNominatorsRaw
+    .filter(({ controller, stake, ledger }) => {
+      if (stake.isZero() && ledger.isNone) {
+        console.log(
+          `😱 ${controller} seems to have no ledger. This is a state bug.`
+        );
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .filter(({ stake }) => stake < minNominatorBond.toNumber())
+    .map(({ controller, stake }) => ({
+      address: controller.toHuman(),
+      amount: stake.toHuman(),
+    }));
 
-          // TODO(alex): make sure to slice the `nominatorsBelow` 
-		  // if they are higher than `chillableAmount`
-          /*
-		  if (nominatorsBelow.length > chillableAmount) {
-			// slice(0, chillableAmount - 1) // we need to minus with 1 as this is inclusive in the slice end
-		  }
-		  */
+  const txns = nominatorsBelow.map(({ address }) =>
+    api.tx.staking.chillOther(address)
+  );
 
-          console.log("Total chillable:", txns.length);
+  console.log("Total chillable:", txns.length);
 
-          const tx = api.tx.utility.batch(txns);
+  const tx = api.tx.utility.batch(txns);
 
-          // TODO(alex): Should sign with injector on the UI => `{ signer: injector.signer }`
-          // https://polkadot.js.org/docs/extension/usage
-          await tx.signAndSend(account, /*{ signer: injector.signer }, */ ({ status }) => {
-            if (status.isInBlock) {
-              console.log(
-                `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
-              );
-            } else if (status.isBroadcast) {
-              console.log(`🚀 Transaction broadcasted.`);
-            } else if (status.isFinalized) {
-              console.log(
-                `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
-              );
-            } else if (status.isReady) {
-              // let's not be too noisy..
-            } else {
-              console.log(`🤷 Other status ${status}`);
-            }
-          });
+  await tx.signAndSend(
+    account,
+    /*{ signer: injector.signer }, */ ({ status }) => {
+      if (status.isInBlock) {
+        console.log(
+          `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
+        );
+      } else if (status.isBroadcast) {
+        console.log(`🚀 Transaction broadcasted.`);
+      } else if (status.isFinalized) {
+        console.log(
+          `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
+        );
+      } else if (status.isReady) {
+        // let's not be too noisy..
+      } else {
+        console.log(`🤷 Other status ${status}`);
+      }
+    }
+  );
 
-          // Artificially waiting for `signAndSend` to work
-          await new Promise((resolve) => setTimeout(resolve, 3000));
-        });
-    });
+  // Artificially waiting for `signAndSend` to work
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 }
 
 main()
