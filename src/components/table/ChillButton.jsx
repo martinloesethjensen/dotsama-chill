@@ -23,9 +23,9 @@ export const ChillButton = () => {
 
 
     const handleOnClick = () => {
-        if (statistics.chillThreshold) {
-            showBanner(BANNER_MODES.ON_IS_KUSAMA);
-            return
+        if (statistics.chillThreshold.isNone) {
+            showBanner(BANNER_MODES.ON_IS_NO_THRESHOLD);
+            return;
         }
 
         if (selectedNominators.length === 0) {

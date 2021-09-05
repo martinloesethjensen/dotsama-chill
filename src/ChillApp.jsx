@@ -70,7 +70,7 @@ export const ChillApp = ({}) => {
                 <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount}}>
                     <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
                         <BannerContext.Provider
-                            value={{showBanner: (mode, name,status) => showBanner({setBannerState}, mode, name,status)}}>
+                            value={{showBanner: (mode, name, status) => showBanner({setBannerState}, mode, name, status)}}>
                             <Banner bannerState={bannerState} setBannerState={setBannerState}/>
                             <div className="px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
                                 <Header/>
@@ -79,6 +79,8 @@ export const ChillApp = ({}) => {
                                     chill multiple
                                     nominators in
                                     a batch.</p>
+                                <p className="text-md pb-6 text-red-400">PLEASE NOTE: chilling is not an economically valuable task. 
+                                    Anyone submitting the chill merely loses transaction fees, with no reward.</p>
                                 <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
                                 <NominatorTable isLoading={isLoadingNominators}/>
                             </div>
