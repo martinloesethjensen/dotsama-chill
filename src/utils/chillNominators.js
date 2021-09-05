@@ -1,7 +1,8 @@
 import {getApi} from "./getApi";
 import {web3FromSource} from "@polkadot/extension-dapp";
+import {BANNER_MODES} from "../components/state/BannerState";
 
-export const chillNominators = async (statistics, account, nominatorsList,selectedNetwork) => {
+export const chillNominators = async (statistics, account, nominatorsList, selectedNetwork, showBanner) => {
 
     const api = await getApi(selectedNetwork);
 
@@ -24,19 +25,24 @@ export const chillNominators = async (statistics, account, nominatorsList,select
 
     const tx = api.tx.utility.batch(transactions);
     await tx.signAndSend(account.address, {signer: injector.signer}, ({status}) => {
+
+        const {name} = tx.meta;
+
         if (status.isInBlock) {
-            console.log(
-                `📀 Transaction ${tx.meta.name} included at blockHash ${status.asInBlock}`
+            showBanner(BANNER_MODES.ON_IS_IN_BLOCK, name, status.asInBlock);
+            console.log(`📀 Transaction ${name} included at blockHash ${status.asInBlock}`
             );
         } else if (status.isBroadcast) {
+            showBanner(BANNER_MODES.ON_IS_BROADCAST);
             console.log(`🚀 Transaction broadcasted.`);
         } else if (status.isFinalized) {
-            console.log(
-                `💯 Transaction ${tx.meta.name}(..) Finalized at blockHash ${status.asFinalized}`
+            showBanner(BANNER_MODES.ON_IS_FINALIZED, name, status.asFinalized);
+            console.log(`💯 Transaction ${name}(..) Finalized at blockHash ${status.asFinalized}`
             );
         } else if (status.isReady) {
             // let's not be too noisy..
         } else {
+            showBanner(BANNER_MODES.ON_IS_FINALIZED, status);
             console.log(`🤷 Other status ${status}`);
         }
     });

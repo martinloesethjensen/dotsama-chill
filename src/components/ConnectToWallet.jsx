@@ -19,9 +19,12 @@ export function ConnectToWallet() {
     const [accounts, setAccounts] = useState([]);
     const [balance, setBalance] = useState("");
 
+    const [isLoading, setIsLoading] = useState(true);
+
 
     const startWeb3 = async () => {
         console.log("Fetching Accounts")
+        setIsLoading(true)
         const allInjected = await web3Enable('dotsama-chill');
 
         const allAccounts = await web3Accounts();
@@ -33,14 +36,19 @@ export function ConnectToWallet() {
 
         console.log(selectedAccount)
 
-        fetchBalance(allAccounts[0]);
+        await fetchBalance(allAccounts[0]);
+        setIsLoading(false)
+
 
     }
 
 
     const handleOnAccountChange = async (newAccount) => {
+        setIsLoading(true)
         setSelectedAccount(newAccount);
-        fetchBalance(newAccount);
+        await fetchBalance(newAccount);
+        setIsLoading(false)
+
 
     }
 
@@ -61,7 +69,7 @@ export function ConnectToWallet() {
         accounts.length === 0 ? <p>Please connect Polkadot.js Wallet</p> :
 
             <div className="flex items-center">
-                <p className="pr-4">{balance}</p>
+                {<p className="pr-4">{isLoading ? "Fetching..." : balance}</p>}
                 <Listbox value={selectedAccount} onChange={handleOnAccountChange}>
                     {({open}) => (
                         <>

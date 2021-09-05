@@ -1,8 +1,7 @@
 import React from "react";
 
 export const NominatorLoadingState = () =>
-    <div className="flex justify-center item-center">
-        <p>DINO GAME here</p>
+    <div className="flex flex-col justify-center items-center w-full">
         <p>Nominators are beeing loaded</p>
     </div>
 

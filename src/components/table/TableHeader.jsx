@@ -1,31 +1,11 @@
 import {NominatorsContext} from "../../context/NominatorsContext";
-import {SelectedNominatorsContext} from "../../context/SelectedNominatorsContext";
 import React, {useContext} from "react";
-import {Button} from "../Button";
-import {chillNominators} from "../../utils/chillNominators";
 import {SortButton} from "./SortButton";
-import {StatisticsContext} from "../../context/StatisticsContext";
-import {SelectedAccountContext} from "../../context/SelectedAccountContext";
-import {NetworkContext} from "../../context/NetworkContext";
-import {SUPPORTED_NETWORKS} from "../../utils/setProvider";
-import {COLORS} from "../../constants";
+import {ChillButton} from "./ChillButton";
 
 export const TableHeader = () => {
 
-    const {nominators, setNominators} = useContext(NominatorsContext);
-    const {selectedNominators} = useContext(SelectedNominatorsContext);
-    const {statistics} = useContext(StatisticsContext);
-    const {selectedAccount} = useContext(SelectedAccountContext);
-    const {selectedNetwork} = useContext(NetworkContext);
-
-    const handleOnClick = () => {
-        chillNominators(statistics, selectedAccount, selectedNominators, selectedNetwork);
-
-    }
-
-    const getButtonName = () => `Chill ${selectedNominators.length}`
-
-    const buttonColor = selectedNetwork === SUPPORTED_NETWORKS.POLKADOT ? COLORS.POLKADOT : COLORS.KUSAMA;
+    const {nominators} = useContext(NominatorsContext);
 
 
     return <div className="text-lg">
@@ -34,7 +14,7 @@ export const TableHeader = () => {
             <p className="text-2xl ">Nominators ({nominators.length})</p>
             <div className="flex justify-between items-center w-4/12 ">
                 <SortButton/>
-                <Button onClick={handleOnClick} name={getButtonName()} color={buttonColor}/>
+                <ChillButton/>
             </div>
         </div>
         <div className="flex items-center font-bold px-4 py-2 bg-white ">

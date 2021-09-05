@@ -5,16 +5,15 @@ import {NominatorsContext} from "../../context/NominatorsContext";
 import {ChillAllTile} from "./ChillAllTile";
 import {NominatorLoadingState} from "../loadingstates/NominatorLoadingState";
 
-export const NominatorTable = ({isLoadingNominators}) => {
+export const NominatorTable = ({isLoading}) => {
 
     const {nominators, onNominatorsFetched} = useContext(NominatorsContext);
 
 
-    const isEmpty = () => isLoadingNominators === false && nominators.length === 0;
+    const isEmpty = () => isLoading === false && nominators.length === 0;
 
 
-    if (isLoadingNominators) {
-
+    if (isLoading) {
         return <NominatorLoadingState/>
     }
 
