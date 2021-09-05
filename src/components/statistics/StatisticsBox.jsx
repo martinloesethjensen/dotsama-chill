@@ -25,12 +25,12 @@ export const StatisticsBox = ({
         <div className="flex justify-between mb-8">
             <StatisticsGroup
                 first={{
-                    name: "Threshold",
+                    name: "Nominator Threshold",
                     count: thresholdOrDefault(),
                     textColor: "red-500",
                 }}
                 second={{
-                    name: "Nominator Ids",
+                    name: "Nominator Count",
                     count: nominatorIdsOrDefault(),
                     textColor: "red-500",
                 }}
