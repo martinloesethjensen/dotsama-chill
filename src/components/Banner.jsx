@@ -22,6 +22,11 @@ export const Banner = ({bannerState, setBannerState}) => {
         color: "bg-red-400"
     }
 
+    const onNetworkIsKusama = {
+        headline: `Chilling on Kusama is currently not possible since there is no threshold set for chilling`,
+        color: "bg-red-400"
+    }
+
     const headline = () => {
         switch (bannerState.mode) {
             case BANNER_MODES.ON_IS_IN_BLOCK:
@@ -32,6 +37,9 @@ export const Banner = ({bannerState, setBannerState}) => {
                 return onTransactionIsFinalized.headline
             case BANNER_MODES.ON_IS_FAILED:
                 return onTransactionFailed.headline
+            case BANNER_MODES.ON_IS_KUSAMA:
+                return onNetworkIsKusama.headline
+
             default:
                 return ""
         }
@@ -47,6 +55,8 @@ export const Banner = ({bannerState, setBannerState}) => {
                 return COLORS.GREEN
             case BANNER_MODES.ON_IS_FAILED:
                 return COLORS.RED
+            case BANNER_MODES.ON_IS_KUSAMA:
+                return COLORS.RED
             default:
                 return ""
         }
@@ -60,10 +70,7 @@ export const Banner = ({bannerState, setBannerState}) => {
                     <div className="w-0 flex-1 flex items-center">
 
                         <p className="ml-3 font-medium text-white ">
-
-
-                                {headline()}
-
+                            {headline()}
                         </p>
                     </div>
 

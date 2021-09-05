@@ -9,6 +9,7 @@ import {SelectedAccountContext} from "../../context/SelectedAccountContext";
 import {NetworkContext} from "../../context/NetworkContext";
 import {NominatorsContext} from "../../context/NominatorsContext";
 import {BannerContext} from "../../context/BannerContext";
+import {BANNER_MODES} from "../state/BannerState";
 
 
 export const ChillButton = () => {
@@ -22,9 +23,16 @@ export const ChillButton = () => {
 
 
     const handleOnClick = () => {
+        if (statistics.chillThreshold) {
+            showBanner(BANNER_MODES.ON_IS_KUSAMA);
+            return
+        }
+
         if (selectedNominators.length === 0) {
             return;
         }
+
+
         chillNominators(statistics, selectedAccount, selectedNominators, selectedNetwork, showBanner);
 
     }
