@@ -3,39 +3,42 @@
 You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/). 
 > Please note that it can take a minute or two for it to load all the nominators that can be chilled.  
 
+There's a post on [polkassembly for tip proposal](https://kusama.polkassembly.io/tip/0x2e98e3eff4e931943b688e718db8dfb8ba27ce2856ffb4364804a72e16db996b).
+
 ## Introduction
 
-TODO
+At present while the `chillOther` extrinsic is permission less many less technical nominators don't know how to find a chillable nominator and thereafter how to chill them. This application helps simplify the process and reduces reliance on Parity/W3F to issue mass chills when limits are reached.
 
-![image](https://user-images.githubusercontent.com/31356774/132040142-9540c139-e848-479c-a6a9-e3c08104dc3f.png)
-
-### Why 
-
-TODO
+![image](https://user-images.githubusercontent.com/31356774/132140016-87f2a918-4482-40b8-822c-c29a72473de7.png)
 
 ### App features
 
-TODO
+- Statistics overview
+- List of chillable nominators
+- Switching between Polkadot & Kusama
+- Chill button to do a transaction with `utility.batch` that has an array of `staking.chillOther`.
 
 ### Roadmap
 
-- Statistics overview:
-    - Minimum nominator bond
-    - Nominators 
-    - Max nominators  
-    - Chill threshold
-    - Chillable amount 
-    - Era info  
-- Identicon on addresses
-- Success dialog with block hash and link to subscan
-- Error dialog when trying to chill
+- [x] Statistics overview:
+    - [x] Minimum nominator bond
+    - [x] Nominators 
+    - [x] Max nominators  
+    - [x] Chill threshold
+    - [x] Chillable amount 
+    - [x] Era info  
+- [ ] Identicon on addresses
+- [ ] Success popup
+    - [x] Showing hash on succeeded transaction
+    - [ ] Link to subscan for extrinsic 
+- [ ] Error popup when trying to "chill" button and transaction somehow fails 
 - Loading states:
-    - Loading of nominators below threshold
-    - Loading of transaction 
-- Empty state (when no nominators can be chilled) 
-- Range slider sorting on amount
-- Switching between networks (Polkadot & Kusama)
-    - Kusama when this would become a necessity => currently there's no threshold on Kusama and the current nominators are way below max nominator count.
+    - [x] Loading of nominators below threshold
+    - [x] Loading of transaction 
+- [x] Empty state (when no nominators can be chilled) 
+- [ ] Range slider sorting on amount
+- [x] Switching between networks (Polkadot & Kusama)
+    - currently there's no threshold on Kusama and the current nominators are way below max nominator count.
 
 Have a look at [the board](https://github.com/martinloesethjensen/dotsama-chill/projects/1) to see the progress and planned work 👷
 
