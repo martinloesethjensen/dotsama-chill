@@ -55,7 +55,7 @@
     "postcss": "^7.0.36",
     "react-app-rewired": "^2.1.8",
     "semistandard": "^16.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.8"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
   },
   "engines": {
     "node": ">=12",
