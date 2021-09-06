@@ -39,7 +39,7 @@ At present while the `chillOther` extrinsic is permission less many less technic
 - [ ] Range slider sorting on amount
 - [x] Switching between networks (Polkadot & Kusama)
     - currently there's no threshold on Kusama and the current nominators are way below max nominator count.
-- [ ] Use elara.patract.io endpoint for Polkadot & Kusama
+- [x] Use elara.patract.io endpoint for Polkadot & Kusama
 
 Have a look at [the board](https://github.com/martinloesethjensen/dotsama-chill/projects/1) to see the progress and planned work 👷
 
