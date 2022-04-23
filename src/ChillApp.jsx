@@ -1,21 +1,21 @@
-import {NominatorTable} from "./components/table/NominatorTable";
-import {NominatorsContext} from "./context/NominatorsContext";
-import React, {useEffect, useState} from "react";
-import {fetchNominators} from "./utils/fetchNominators";
-import {SUPPORTED_NETWORKS} from "./utils/setProvider";
-import {SelectedNominatorsContext} from "./context/SelectedNominatorsContext";
-import {getApi} from "./utils/getApi";
-import {fetchStatistics} from "./utils/fetchStatistics";
-import {StatisticsContext} from "./context/StatisticsContext";
-import {SelectedAccountContext} from "./context/SelectedAccountContext";
-import {StatisticsBox} from "./components/statistics/StatisticsBox";
-import {NetworkContext} from "./context/NetworkContext";
-import {Header} from "./components/Header";
-import {BannerState, showBanner} from "./components/state/BannerState";
-import {BannerContext} from "./context/BannerContext";
-import {Banner} from "./components/Banner";
+import { NominatorTable } from "./components/table/NominatorTable";
+import { NominatorsContext } from "./context/NominatorsContext";
+import React, { useEffect, useState } from "react";
+import { fetchNominators } from "./utils/fetchNominators";
+import { SUPPORTED_NETWORKS } from "./utils/setProvider";
+import { SelectedNominatorsContext } from "./context/SelectedNominatorsContext";
+import { getApi } from "./utils/getApi";
+import { fetchStatistics } from "./utils/fetchStatistics";
+import { StatisticsContext } from "./context/StatisticsContext";
+import { SelectedAccountContext } from "./context/SelectedAccountContext";
+import { StatisticsBox } from "./components/statistics/StatisticsBox";
+import { NetworkContext } from "./context/NetworkContext";
+import { Header } from "./components/Header";
+import { BannerState, showBanner } from "./components/state/BannerState";
+import { BannerContext } from "./context/BannerContext";
+import { Banner } from "./components/Banner";
 
-export const ChillApp = ({}) => {
+export const ChillApp = ({ }) => {
 
     const [nominators, setNominators] = useState([]);
     const [selectedNominators, setSelectedNominators] = useState([]);
@@ -30,12 +30,12 @@ export const ChillApp = ({}) => {
         maxNominatorsCount: 0
     });
 
-    const [selectedAccount, setSelectedAccount] = useState({address: null, meta: {name: null}})
+    const [selectedAccount, setSelectedAccount] = useState({ address: null, meta: { name: null } })
 
     const [isLoadingNominators, setIsLoadingNominators] = useState(true);
     const [isLoadingStatistics, setIsLoadingStatistics] = useState(true);
 
-    const [bannerState, setBannerState] = useState({...BannerState})
+    const [bannerState, setBannerState] = useState({ ...BannerState })
 
 
     useEffect(() => {
@@ -64,25 +64,25 @@ export const ChillApp = ({}) => {
     }
 
 
-    return <NominatorsContext.Provider value={{nominators, setNominators}}>
-        <SelectedNominatorsContext.Provider value={{selectedNominators, setSelectedNominators}}>
-            <StatisticsContext.Provider value={{statistics}}>
-                <SelectedAccountContext.Provider value={{selectedAccount, setSelectedAccount}}>
-                    <NetworkContext.Provider value={{selectedNetwork, setSelectedNetwork}}>
+    return <NominatorsContext.Provider value={{ nominators, setNominators }}>
+        <SelectedNominatorsContext.Provider value={{ selectedNominators, setSelectedNominators }}>
+            <StatisticsContext.Provider value={{ statistics }}>
+                <SelectedAccountContext.Provider value={{ selectedAccount, setSelectedAccount }}>
+                    <NetworkContext.Provider value={{ selectedNetwork, setSelectedNetwork }}>
                         <BannerContext.Provider
-                            value={{showBanner: (mode, name, status) => showBanner({setBannerState}, mode, name, status)}}>
-                            <Banner bannerState={bannerState} setBannerState={setBannerState}/>
-                            <div className="px-24 py-8 h-screen" style={{backgroundColor: "#f5f3f1"}}>
-                                <Header/>
+                            value={{ showBanner: (mode, name, status) => showBanner({ setBannerState }, mode, name, status) }}>
+                            <Banner bannerState={bannerState} setBannerState={setBannerState} />
+                            <div className="px-24 py-8 h-screen" style={{ backgroundColor: "#f5f3f1" }}>
+                                <Header />
                                 <p className="text-md pb-6">A tool to list nominators below threshold and has the option
                                     to
                                     chill multiple
                                     nominators in
                                     a batch.</p>
-                                <p className="text-md pb-6 text-red-400">PLEASE NOTE: chilling is not an economically valuable task. 
+                                <p className="text-md pb-6 text-red-400">PLEASE NOTE: chilling is not an economically valuable task.
                                     Anyone submitting the chill merely loses transaction fees, with no reward.</p>
-                                <StatisticsBox {...statistics} isLoading={isLoadingStatistics}/>
-                                <NominatorTable isLoading={isLoadingNominators}/>
+                                <StatisticsBox {...statistics} isLoading={isLoadingStatistics} />
+                                <NominatorTable isLoading={isLoadingNominators} />
                             </div>
                         </BannerContext.Provider>
                     </NetworkContext.Provider>

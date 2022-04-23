@@ -1,7 +1,8 @@
 # dotsama-chill
 
-You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/). 
-> Please note that it can take a minute or two for it to load all the nominators that can be chilled.  
+You can access the app [here](https://martinloesethjensen.github.io/dotsama-chill/).
+
+> Please note that it can take a minute or two for it to load all the nominators that can be chilled.
 
 There's a post on [polkassembly for tip proposal](https://kusama.polkassembly.io/tip/0x2e98e3eff4e931943b688e718db8dfb8ba27ce2856ffb4364804a72e16db996b).
 
@@ -21,31 +22,31 @@ At present while the `chillOther` extrinsic is permission less many less technic
 ### Roadmap
 
 - [x] Statistics overview:
-    - [x] Minimum nominator bond
-    - [x] Nominators 
-    - [x] Max nominators  
-    - [x] Chill threshold
-    - [x] Chillable amount 
-    - [x] Era info  
+  - [x] Minimum nominator bond
+  - [x] Nominators
+  - [x] Max nominators
+  - [x] Chill threshold
+  - [x] Chillable amount
+  - [x] Era info
 - [ ] Identicon on addresses
 - [ ] Success popup
-    - [x] Showing hash on succeeded transaction
-    - [ ] Link to subscan for extrinsic 
-- [ ] Error popup when trying to "chill" button and transaction somehow fails 
+  - [x] Showing hash on succeeded transaction
+  - [ ] Link to subscan for extrinsic
+- [ ] Error popup when trying to "chill" button and transaction somehow fails
 - Loading states:
-    - [x] Loading of nominators below threshold
-    - [x] Loading of transaction 
-- [x] Empty state (when no nominators can be chilled) 
+  - [x] Loading of nominators below threshold
+  - [x] Loading of transaction
+- [x] Empty state (when no nominators can be chilled)
 - [ ] Range slider sorting on amount
 - [x] Switching between networks (Polkadot & Kusama)
-    - currently there's no threshold on Kusama and the current nominators are way below max nominator count.
+  - currently there's no threshold on Kusama and the current nominators are way below max nominator count.
 - [x] Use elara.patract.io endpoint for Polkadot & Kusama
 
 Have a look at [the board](https://github.com/martinloesethjensen/dotsama-chill/projects/1) to see the progress and planned work 👷
 
 ### Installation
 
-The codebase is installed using [git](https://git-scm.com/) and [yarn](https://yarnpkg.com/). This tutorial assumes you have installed yarn globally prior to installing it within the subdirectories. For the most recent version and how to install yarn, please refer to [yarn](https://yarnpkg.com/) documentation and installation guides. 
+The codebase is installed using [git](https://git-scm.com/) and [yarn](https://yarnpkg.com/). This tutorial assumes you have installed yarn globally prior to installing it within the subdirectories. For the most recent version and how to install yarn, please refer to [yarn](https://yarnpkg.com/) documentation and installation guides.
 
 ```bash
 # Clone the repository
@@ -67,15 +68,16 @@ You can also build the app in production mode,
 ```bash
 yarn build
 ```
+
 and open `build/index.html` in your favorite browser.
 
-### Deploying 
+### Deploying
 
 ```bash
 yarn deploy
 ```
 
-## Tipping 
+## Tipping
 
 🌱 KSM tipping address 😊
 
